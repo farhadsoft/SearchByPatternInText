@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SearchByPatternInText
 {
@@ -16,7 +17,31 @@ namespace SearchByPatternInText
         /// <exception cref="ArgumentException">Thrown if text or pattern is null.</exception>
         public static int[] SearchPatternString(this string text, string pattern, bool overlap)
         {
-            throw new NotImplementedException("You need to implement this method.");
+            if (text is null)
+            {
+                throw new ArgumentException($"Thrown if {nameof(text)} is null.");
+            }
+
+            if (pattern is null)
+            {
+                throw new ArgumentException($"Thrown if {nameof(pattern)} is null.");
+            }
+
+            int lastIndex = 0;
+            List<int> result = new List<int>();
+
+            while (lastIndex != -1)
+            {
+                lastIndex = text.IndexOf(pattern, lastIndex, StringComparison.OrdinalIgnoreCase);
+
+                if (lastIndex != -1)
+                {
+                    lastIndex++;
+                    result.Add(lastIndex);
+                }
+            }
+
+            return result.ToArray();
         }
     }
 }
