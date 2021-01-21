@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace SearchByPatternInText
 {
@@ -32,13 +33,20 @@ namespace SearchByPatternInText
 
             while (lastIndex != -1)
             {
-                lastIndex = text.IndexOf(pattern, lastIndex, StringComparison.OrdinalIgnoreCase);
+                lastIndex = text.IndexOf(pattern, lastIndex, StringComparison.CurrentCultureIgnoreCase);
 
                 if (lastIndex != -1)
                 {
-                    lastIndex++;
-                    result.Add(lastIndex);
-                }
+                    result.Add(lastIndex + 1);
+                    if (overlap)
+                    {
+                        lastIndex++;
+                    }
+                    else
+                    {
+                        lastIndex += pattern.Length;
+                    }
+                }                
             }
 
             return result.ToArray();
